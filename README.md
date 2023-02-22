@@ -11,7 +11,7 @@ Installs sox binaries and allows you to use them in your python code.
 
 ```bash
 > pip install static-sox
-> static_sox --help  # static_sox -> sox
+> static_sox  # static_sox pass all args to sox
 ```
 
 ```python
