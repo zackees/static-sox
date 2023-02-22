@@ -108,6 +108,7 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
         sox_exe = os.path.join(bin_dir, "sox-14.4.2-linux", "sox-14.4.2", "sox")
     else:
         raise OSError(f"Please implement static-sox for {sys.platform}")
+    assert os.path.exists(sox_exe), f"Could not find sox executable at {sox_exe}"
     if (
         fix_permissions
         and sys.platform != "win32"
