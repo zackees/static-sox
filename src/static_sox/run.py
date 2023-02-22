@@ -72,9 +72,7 @@ def get_or_fetch_platform_executables_else_raise(
                 fix_permissions=fix_permissions
             )
     except Timeout:
-        sys.stderr.write(
-            f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n"
-        )
+        sys.stderr.write(f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n")
         return _get_or_fetch_platform_executables_else_raise_no_lock(
             fix_permissions=fix_permissions
         )
@@ -123,6 +121,12 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
         os.chmod(sox_exe, exe_bits | read_bits)
         assert os.access(sox_exe, os.X_OK), f"Could not execute {sox_exe}"
         assert os.access(sox_exe, os.R_OK), f"Could not get read bits of {sox_exe}"
+    if "linux" in sys.platform:
+        # On linux, we need to set LD_LIBRARY_PATH to the directory
+        # where the ffmpeg libraries are stored.
+        prev_ld_library_path = os.environ.get("LD_LIBRARY_PATH", "")
+        install_dir = os.path.dirname(sox_exe)
+        os.environ["LD_LIBRARY_PATH"] = os.pathsep.join([prev_ld_library_path, install_dir])
     return sox_exe
 
 
