@@ -3,8 +3,8 @@ Unit test file.
 """
 
 import os
-from subprocess import check_call
 import unittest
+from subprocess import check_call
 
 from static_sox.run import get_or_fetch_platform_executables_else_raise
 
@@ -26,7 +26,9 @@ class MainTester(unittest.TestCase):
 
     def test_gain_alteration(self) -> None:
         """Test setting the gain on an mp3 file."""
-        self.assertTrue(os.path.exists(BELL_WAV), f"bell_wav: {BELL_WAV} does not exist")
+        self.assertTrue(
+            os.path.exists(BELL_WAV), f"bell_wav: {BELL_WAV} does not exist"
+        )
         if os.path.exists(OUT_WAV):
             os.remove(OUT_WAV)
         check_call(f'static_sox "{BELL_WAV}" "{OUT_WAV}" gain -3', shell=True)

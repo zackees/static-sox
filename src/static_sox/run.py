@@ -72,13 +72,15 @@ def get_or_fetch_platform_executables_else_raise(
                 fix_permissions=fix_permissions
             )
     except Timeout:
-        sys.stderr.write(f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n")
+        sys.stderr.write(
+            f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n"
+        )
         return _get_or_fetch_platform_executables_else_raise_no_lock(
             fix_permissions=fix_permissions
         )
 
 
-def _get_or_fetch_platform_executables_else_raise_no_lock(
+def _get_or_fetch_platform_executables_else_raise_no_lock(  # pylint: disable=too-many-locals
     fix_permissions=True,
 ) -> str:
     """Either get the executable or raise an error, internal api"""
@@ -126,8 +128,25 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
         # where the ffmpeg libraries are stored.
         prev_ld_library_path = os.environ.get("LD_PRELOAD", "")
         install_dir = os.path.dirname(sox_exe)
-        ld_path = os.path.join(install_dir, "libsox.so.3.0.0")
-        ld_paths = [prev_ld_library_path, ld_path]
+        deps = [
+            "ld-linux-x86-64.so.2",
+            "libbz2.so.1.0",
+            "libc.so.6",
+            "libgomp.so.1",
+            "libgsm.so.1",
+            "libltdl.so.7",
+            "liblzma.so.5",
+            "libm.so.6",
+            "libmagic.so.1",
+            "libpng16.so.16",
+            "libpthread.so.0",
+            "libsox.so.3",
+            "libz.so.1",
+        ]
+        ld_paths = [prev_ld_library_path]
+        for dep in deps:
+            ld_path = os.path.join(install_dir, dep)
+            ld_paths.append(ld_path)
         ld_paths = [x for x in ld_paths if x]
         os.environ["LD_PRELOAD"] = os.pathsep.join(ld_paths)
     return sox_exe
