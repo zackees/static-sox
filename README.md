@@ -24,7 +24,7 @@ os.system("sox --help")
 
 # Without this library...
 
-Your sox tool would have to rely on the user to install sox, with the right build settings to ensure your tool functions correctly. This is a major pain for sox based tools (missing codecs for example) and this library solves this problem.
+Your sox tool would have to rely on the user to install sox, with the right build settings to ensure your tool functions correctly. This is a major pain for sox based tools and this library solves this problem.
 
 As of now, binaries are available for:
 
