@@ -12,6 +12,7 @@ license = { text = "BSD 3-Clause License" }
 classifiers = ["Programming Language :: Python :: 3"]
 dependencies = [
     "requests",
+    "filelock",
 ]
 # Change this with the version number bump.
 # Also make the change in zcmds/version.py
