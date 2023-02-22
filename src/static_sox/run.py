@@ -7,7 +7,6 @@ import stat
 import sys
 import zipfile
 from datetime import datetime
-from typing import Tuple
 
 import requests  # type: ignore
 from filelock import FileLock, Timeout
@@ -38,10 +37,10 @@ def get_platform_http_zip():
     return PLATFORM_ZIP_FILES[sys.platform]
 
 
-def get_platform_dir():
+def get_bin_dir():
     """Either get the executable or raise an error"""
     check_system()
-    return os.path.join(SELF_DIR, "bin", sys.platform)
+    return os.path.join(SELF_DIR, "bin")
 
 
 def download_file(url, local_path):
@@ -63,7 +62,7 @@ def download_file(url, local_path):
 
 def get_or_fetch_platform_executables_else_raise(
     fix_permissions=True,
-) -> Tuple[str, str]:
+) -> str:
     """Either get the executable or raise an error"""
     lock = FileLock(LOCK_FILE, timeout=TIMEOUT)  # pylint: disable=E0110
     try:
@@ -72,7 +71,9 @@ def get_or_fetch_platform_executables_else_raise(
                 fix_permissions=fix_permissions
             )
     except Timeout:
-        sys.stderr.write(f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n")
+        sys.stderr.write(
+            f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n"
+        )
         return _get_or_fetch_platform_executables_else_raise_no_lock(
             fix_permissions=fix_permissions
         )
@@ -80,29 +81,28 @@ def get_or_fetch_platform_executables_else_raise(
 
 def _get_or_fetch_platform_executables_else_raise_no_lock(
     fix_permissions=True,
-) -> Tuple[str, str]:
+) -> str:
     """Either get the executable or raise an error, internal api"""
-    exe_dir = get_platform_dir()
-    installed_crumb = os.path.join(exe_dir, "installed.crumb")
+    bin_dir = get_bin_dir()
+    installed_crumb = os.path.join(bin_dir, "installed.crumb")
     if not os.path.exists(installed_crumb):
         # All zip files store their platform executables in a folder
         # like "win32" or "darwin" or "linux" inside the executable. So root
         # the install one level up from that same directory.
-        install_dir = os.path.dirname(exe_dir)
-        os.makedirs(exe_dir, exist_ok=True)
+        os.makedirs(bin_dir, exist_ok=True)
         url = get_platform_http_zip()
-        local_zip = exe_dir + ".zip"
+        local_zip = os.path.join(bin_dir, sys.platform + ".zip")
         download_file(url, local_zip)
-        print(f"Extracting {local_zip} -> {install_dir}")
+        print(f"Extracting {local_zip} -> {bin_dir}")
         with zipfile.ZipFile(local_zip, mode="r") as zipf:
-            zipf.extractall(install_dir)
+            zipf.extractall(bin_dir)
         try:
             os.remove(local_zip)
         except OSError as err:
             print(f"{__file__}: Error could not remove {local_zip} because of {err}")
         with open(installed_crumb, "wt") as filed:  # pylint: disable=W1514
             filed.write(f"installed from {url} on {str(datetime.now())}")
-    sox_exe = os.path.join(exe_dir, "sox")
+    sox_exe = os.path.join(bin_dir, "sox")
     if sys.platform == "win32":
         sox_exe = f"{sox_exe}.exe"
     for exe in [sox_exe]:
@@ -118,7 +118,6 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
             assert os.access(exe, os.X_OK), f"Could not execute {exe}"
             assert os.access(exe, os.R_OK), f"Could not get read bits of {exe}"
     return sox_exe
-
 
 
 def main_print_paths() -> None:
