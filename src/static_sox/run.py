@@ -20,7 +20,7 @@ LOCK_FILE = os.path.join(SELF_DIR, "lock.file")
 
 PLATFORM_ZIP_FILES = {
     "win32": "https://github.com/zackees/static-sox/raw/main/bin/sox-14.4.2-win32.zip",
-    "darwin": "https://github.com/zackees/static-sox/raw/main/bin/sox-14.4.2-macos.zipp",
+    "darwin": "https://github.com/zackees/static-sox/raw/main/bin/sox-14.4.2-darwin.zip",
     "linux": "https://github.com/zackees/static-sox/raw/main/bin/sox-14.4.2-darwin.zip",
 }
 
