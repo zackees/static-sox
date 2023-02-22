@@ -71,9 +71,7 @@ def get_or_fetch_platform_executables_else_raise(
                 fix_permissions=fix_permissions
             )
     except Timeout:
-        sys.stderr.write(
-            f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n"
-        )
+        sys.stderr.write(f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n")
         return _get_or_fetch_platform_executables_else_raise_no_lock(
             fix_permissions=fix_permissions
         )
@@ -105,18 +103,17 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
     sox_exe = os.path.join(bin_dir, "sox")
     if sys.platform == "win32":
         sox_exe = f"{sox_exe}.exe"
-    for exe in [sox_exe]:
-        if (
-            fix_permissions
-            and sys.platform != "win32"
-            and (not os.access(exe, os.X_OK) or not os.access(exe, os.R_OK))
-        ):
-            # Set bits for execution and read for all users.
-            exe_bits = stat.S_IXOTH | stat.S_IXUSR | stat.S_IXGRP
-            read_bits = stat.S_IRUSR | stat.S_IRGRP | stat.S_IXGRP
-            os.chmod(exe, exe_bits | read_bits)
-            assert os.access(exe, os.X_OK), f"Could not execute {exe}"
-            assert os.access(exe, os.R_OK), f"Could not get read bits of {exe}"
+    if (
+        fix_permissions
+        and sys.platform != "win32"
+        and (not os.access(sox_exe, os.X_OK) or not os.access(sox_exe, os.R_OK))
+    ):
+        # Set bits for execution and read for all users.
+        exe_bits = stat.S_IXOTH | stat.S_IXUSR | stat.S_IXGRP
+        read_bits = stat.S_IRUSR | stat.S_IRGRP | stat.S_IXGRP
+        os.chmod(sox_exe, exe_bits | read_bits)
+        assert os.access(sox_exe, os.X_OK), f"Could not execute {sox_exe}"
+        assert os.access(sox_exe, os.R_OK), f"Could not get read bits of {sox_exe}"
     return sox_exe
 
 
