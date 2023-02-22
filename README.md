@@ -6,6 +6,8 @@
 [![Ubuntu_Tests](../../actions/workflows/push_ubuntu.yml/badge.svg)](../../actions/workflows/push_ubuntu.yml)
 [![Win_Tests](../../actions/workflows/push_win.yml/badge.svg)](../../actions/workflows/push_win.yml)
 
+# Usage
+
 ```bash
 > pip install static-sox
 > static_sox --help
@@ -21,6 +23,12 @@ os.system("sox --help")
 # About
 
 Installs sox binaries and allows you to use them in your python code.
+
+# Without this library...
+
+Your sox tool would have to rely on the user to install sox, with the right build settings to ensure your tool functions correctly. This is a major pain for sox based tools (missing codecs for example) and this library solves this problem.
+
+As of now, binaries are available for:
 
 # Development
 
