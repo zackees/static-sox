@@ -18,6 +18,7 @@ Installs sox binaries and allows you to use them in your python code.
 import static_sox
 import os
 static_sox.add_paths(weak=True)  # Only install if sox is not available.
+# static_sox.add_paths()  # Sox is installed unconditionally.
 os.system("sox --help")
 ```
 
