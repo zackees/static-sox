@@ -126,7 +126,8 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
         # where the ffmpeg libraries are stored.
         prev_ld_library_path = os.environ.get("LD_PRELOAD", "")
         install_dir = os.path.dirname(sox_exe)
-        ld_paths = [prev_ld_library_path, install_dir]
+        ld_path = os.path.join(install_dir, "libsox.so.3.0.0")
+        ld_paths = [prev_ld_library_path, ld_path]
         ld_paths = [x for x in ld_paths if x]
         os.environ["LD_PRELOAD"] = os.pathsep.join(ld_paths)
     return sox_exe
