@@ -4,6 +4,7 @@
 
 import os
 import stat
+import subprocess
 import sys
 import zipfile
 from datetime import datetime
@@ -71,7 +72,9 @@ def get_or_fetch_platform_executables_else_raise(
                 fix_permissions=fix_permissions
             )
     except Timeout:
-        sys.stderr.write(f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n")
+        sys.stderr.write(
+            f"{__file__}: Warning, could not acquire lock at {LOCK_FILE}\n"
+        )
         return _get_or_fetch_platform_executables_else_raise_no_lock(
             fix_permissions=fix_permissions
         )
@@ -121,6 +124,13 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
         assert os.access(sox_exe, os.X_OK), f"Could not execute {sox_exe}"
         assert os.access(sox_exe, os.R_OK), f"Could not get read bits of {sox_exe}"
     return sox_exe
+
+
+def main_static_sox() -> None:
+    """Entry point for running static_ffmpeg, which delegates to ffmpeg."""
+    sox_exe = get_or_fetch_platform_executables_else_raise()
+    rtn: int = subprocess.call([sox_exe] + sys.argv[1:])
+    sys.exit(rtn)
 
 
 def main_print_paths() -> None:

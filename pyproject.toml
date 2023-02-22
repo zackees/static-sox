@@ -20,3 +20,6 @@ version = "1.0.0"
 
 [tool.mypy]
 ignore_missing_imports = true
+
+[project.scripts]
+static_sox = "static_sox.run:main_static_sox"
