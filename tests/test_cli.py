@@ -11,7 +11,7 @@ class MainTester(unittest.TestCase):
 
     def test_imports(self) -> None:
         """Test command line interface (CLI)."""
-        os.system("static_sox")
+        os.system("static_sox --info")
 
 
 if __name__ == "__main__":
