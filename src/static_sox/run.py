@@ -122,11 +122,13 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
         assert os.access(sox_exe, os.X_OK), f"Could not execute {sox_exe}"
         assert os.access(sox_exe, os.R_OK), f"Could not get read bits of {sox_exe}"
     if "linux" in sys.platform:
-        # On linux, we need to set LD_LIBRARY_PATH to the directory
+        # On linux, we need to set LD_PRELOAD to the directory
         # where the ffmpeg libraries are stored.
-        prev_ld_library_path = os.environ.get("LD_LIBRARY_PATH", "")
+        prev_ld_library_path = os.environ.get("LD_PRELOAD", "")
         install_dir = os.path.dirname(sox_exe)
-        os.environ["LD_LIBRARY_PATH"] = os.pathsep.join([prev_ld_library_path, install_dir])
+        ld_paths = [prev_ld_library_path, install_dir]
+        ld_paths = [x for x in ld_paths if x]
+        os.environ["LD_PRELOAD"] = os.pathsep.join(ld_paths)
     return sox_exe
 
 
