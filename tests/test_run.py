@@ -12,6 +12,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TEST_DATA_DIR = os.path.join(HERE, "test_data")
 BELL_WAV = os.path.join(TEST_DATA_DIR, "bell.wav")
 OUT_WAV = os.path.join(HERE, "out", "output.wav")
+os.makedirs(os.path.dirname(OUT_WAV), exist_ok=True)
 
 
 class MainTester(unittest.TestCase):
