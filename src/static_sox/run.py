@@ -127,9 +127,7 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(  # pylint: disable=to
         prev_ld_library_path = os.environ.get("LD_PRELOAD", "")
         install_dir = os.path.dirname(sox_exe)
         deps = [
-            # "ld-linux-x86-64.so.2",
             "libbz2.so.1.0",
-            # "libc.so.6",
             "libgomp.so.1",
             "libgsm.so.1",
             "libltdl.so.7",
