@@ -40,10 +40,6 @@ This environment requires you to use `git-bash`.
 Run `./lint.sh` to find linting errors using `pylint`, `flake8` and `mypy`.
 
 # Release
-<<<<<<< HEAD
 
-  * 1.0.0: Initial release. All builds pass.
-=======
   * 1.0.1: Improve readme.
   * 1.0.0: Initial release. All builds pass.
->>>>>>> fe2aef3 (bump v1.0.1)
