@@ -100,9 +100,14 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
             print(f"{__file__}: Error could not remove {local_zip} because of {err}")
         with open(installed_crumb, "wt") as filed:  # pylint: disable=W1514
             filed.write(f"installed from {url} on {str(datetime.now())}")
-    sox_exe = os.path.join(bin_dir, "sox")
     if sys.platform == "win32":
-        sox_exe = f"{sox_exe}.exe"
+        sox_exe = os.path.join(bin_dir, "sox-14.4.2-win32", "sox-14.4.2", "sox.exe")
+    elif sys.platform == "darwin":
+        sox_exe = os.path.join(bin_dir, "sox-14.4.2-darwin", "sox-14.4.2", "sox")
+    elif sys.platform == "linux":
+        sox_exe = os.path.join(bin_dir, "sox-14.4.2-linux", "sox-14.4.2", "sox")
+    else:
+        raise OSError(f"Please implement static-sox for {sys.platform}")
     if (
         fix_permissions
         and sys.platform != "win32"
