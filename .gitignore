@@ -136,3 +136,4 @@ dmypy.json
 .activate.sh
 .DS_Store
 src/static_sox/bin/
+src/static_sox/lock.file

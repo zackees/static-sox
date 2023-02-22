@@ -101,11 +101,11 @@ def _get_or_fetch_platform_executables_else_raise_no_lock(
         with open(installed_crumb, "wt") as filed:  # pylint: disable=W1514
             filed.write(f"installed from {url} on {str(datetime.now())}")
     if sys.platform == "win32":
-        sox_exe = os.path.join(bin_dir, "sox-14.4.2-win32", "sox-14.4.2", "sox.exe")
+        sox_exe = os.path.join(bin_dir, "sox-14.4.2-win32", "sox.exe")
     elif sys.platform == "darwin":
-        sox_exe = os.path.join(bin_dir, "sox-14.4.2-darwin", "sox-14.4.2", "sox")
+        sox_exe = os.path.join(bin_dir, "sox-14.4.2-darwin", "sox")
     elif sys.platform == "linux":
-        sox_exe = os.path.join(bin_dir, "sox-14.4.2-linux", "sox-14.4.2", "sox")
+        sox_exe = os.path.join(bin_dir, "sox-14.4.2-linux", "sox")
     else:
         raise OSError(f"Please implement static-sox for {sys.platform}")
     assert os.path.exists(sox_exe), f"Could not find sox executable at {sox_exe}"
