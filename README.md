@@ -9,10 +9,15 @@ Installs sox binaries and allows you to use them in your python code.
 
 # Usage
 
+Outside of python, static_sox can be used to access the library.
+
 ```bash
 > pip install static-sox
 > static_sox  # static_sox will pass all args to sox
 ```
+
+Inside python, you can just add the paths (which will trigger a download) then use sox as you
+normally would.
 
 ```python
 import static_sox
