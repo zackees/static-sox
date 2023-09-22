@@ -5,7 +5,8 @@
 [![Win_Tests](../../actions/workflows/push_win.yml/badge.svg)](../../actions/workflows/push_win.yml)
 [![Linting](../../actions/workflows/lint.yml/badge.svg)](../../actions/workflows/lint.yml)
 
-Installs sox binaries and allows you to use them in your python code.
+Installs sox binaries and allows you to use them in your python code. Why? Because deploying binaries is a pain.
+This library makes it not-your-problem. Now you can make a tool that uses sox backend and distribute it easily.
 
 # Usage
 
@@ -26,10 +27,6 @@ static_sox.add_paths(weak=True)  # Only install if sox is not available.
 # static_sox.add_paths()  # Sox is installed unconditionally.
 os.system("sox --help")
 ```
-
-# Why
-
-Deploying binaries is a pain. This library makes it not-your-problem. Now you can make a tool that uses sox backend and distribute it easily.
 
 # Development
 
