@@ -31,8 +31,6 @@ os.system("sox --help")
 
 Deploying binaries is a pain. This library makes it not-your-problem. Now you can make a tool that uses sox backend and distribute it easily.
 
-As of now, binaries are available for:
-
 # Development
 
 To develop software, run `. ./activate.sh`
