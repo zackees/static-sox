@@ -30,11 +30,8 @@ os.system("sox --help")
 
 # Development
 
-To develop software, run `. ./activate.sh`
-
-# Windows
-
-This environment requires you to use `git-bash`.
+To develop software, run `. ./activate.sh`.
+Note that on windows you need to have `git-bash` installed for development.
 
 # Linting
 
