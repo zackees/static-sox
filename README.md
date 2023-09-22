@@ -27,9 +27,9 @@ static_sox.add_paths(weak=True)  # Only install if sox is not available.
 os.system("sox --help")
 ```
 
-# Without this library...
+# Why
 
-Your sox tool would have to rely on the user to install sox, with the right build settings to ensure your tool functions correctly. This is a major pain for sox based tools and this library solves this problem.
+Deploying binaries is a pain. This library makes it not-your-problem. Now you can make a tool that uses sox backend and distribute it easily.
 
 As of now, binaries are available for:
 
