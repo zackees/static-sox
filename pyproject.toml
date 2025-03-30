@@ -14,6 +14,7 @@ dependencies = [
     "requests",
     "filelock",
 ]
+
 # Change this with the version number bump.
 # Also make the change in zcmds/version.py
 version = "1.0.2"
